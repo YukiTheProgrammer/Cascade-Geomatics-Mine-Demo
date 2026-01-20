@@ -37,3 +37,8 @@
 **/test-results/
 **/playwright-report/
 
+# Large LAS files (host separately on CDN/object storage)
+**/public/data/*.las
+**/dist/data/*.las
+*.las
+
