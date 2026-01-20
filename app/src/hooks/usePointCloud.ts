@@ -77,7 +77,6 @@ interface RendererModules {
 
 const COLOR_MODE_MAP: Record<ColorMode, string> = {
   RGB: 'rgb',
-  Gray: 'gray',
   Height: 'height',
   Intensity: 'intensity',
   Classification: 'classification',
@@ -238,15 +237,6 @@ export function usePointCloud({
             lastUpdate: Date.now(),
           });
         });
-
-        // Ensure the initial color mode is applied before first display.
-        // This prevents the renderer from briefly showing its default mode (rgb) on first load.
-        if (setColorMode) {
-          setColorMode(COLOR_MODE_MAP[colorMode]);
-        }
-        if (setClassificationColorRange) {
-          setClassificationColorRange(classificationColorRange);
-        }
 
         await loadFromPath(lasFilePath);
 

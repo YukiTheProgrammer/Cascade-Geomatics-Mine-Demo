@@ -1088,12 +1088,6 @@ function Tt(n, e) {
   }
   return o;
 }
-function __gray(e) {
-  const o = new Float32Array(e * 3), t = 0.45;
-  for (let i = 0; i < e; i++)
-    o[i * 3] = t, o[i * 3 + 1] = t, o[i * 3 + 2] = t;
-  return o;
-}
 function It(n, e, o, t) {
   const i = new Float32Array(e * 3), a = [0.3, 0.3, 0.3];
   for (let u = 0; u < e; u++) {
@@ -1226,8 +1220,6 @@ function $t(n, e, o = null) {
   switch (n) {
     case "rgb":
       return e.colors && e.hasColor ? e.colors : X(e.positions, e.pointCount, e.bounds);
-    case "gray":
-      return __gray(e.pointCount);
     case "height":
       return X(e.positions, e.pointCount, e.bounds);
     case "intensity":
@@ -2436,7 +2428,7 @@ class Pn {
     const o = e.count, t = e.array;
     this.currentColorMode = bt();
     let i;
-    this.currentColorMode === "gray" ? i = __gray(o) : this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = X(t, o, this.originalData.bounds) : this.currentColorMode === "height" ? i = X(t, o, this.originalData.bounds) : i = X(t, o, this.originalData.bounds), this.geometry.setAttribute("color", new S.BufferAttribute(i, 3));
+    this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = X(t, o, this.originalData.bounds) : this.currentColorMode === "height" ? i = X(t, o, this.originalData.bounds) : i = X(t, o, this.originalData.bounds), this.geometry.setAttribute("color", new S.BufferAttribute(i, 3));
   }
   /**
    * Update geometry with new downsampling based on zoom level
@@ -2467,9 +2459,7 @@ class Pn {
         const A = P * 3;
         x[v * 3] = this.originalData.colors[A], x[v * 3 + 1] = this.originalData.colors[A + 1], x[v * 3 + 2] = this.originalData.colors[A + 2], v++;
       }
-    } else if (this.currentColorMode === "gray")
-      x = __gray(d);
-    else if (this.currentColorMode === "height")
+    } else if (this.currentColorMode === "height")
       x = X(p, d, this.originalData.bounds);
     else if (this.currentColorMode === "intensity" && this.originalData.intensities) {
       const v = new Float32Array(d);
@@ -2516,7 +2506,7 @@ class Pn {
     const e = performance.now(), { positions: o, pointCount: t } = this.originalData;
     this.currentColorMode = bt(), this.currentClassificationRange = ce();
     let i;
-    this.currentColorMode === "gray" ? i = __gray(t) : this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = this.originalData.colors : this.currentColorMode === "height" ? i = X(o, t, this.originalData.bounds) : this.currentColorMode === "intensity" && this.originalData.intensities ? i = Ot(this.originalData.intensities, t) : this.currentColorMode === "classification" && this.originalData.classifications ? this.currentClassificationRange && this.currentClassificationRange.min !== void 0 && this.currentClassificationRange.max !== void 0 ? i = It(
+    this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = this.originalData.colors : this.currentColorMode === "height" ? i = X(o, t, this.originalData.bounds) : this.currentColorMode === "intensity" && this.originalData.intensities ? i = Ot(this.originalData.intensities, t) : this.currentColorMode === "classification" && this.originalData.classifications ? this.currentClassificationRange && this.currentClassificationRange.min !== void 0 && this.currentClassificationRange.max !== void 0 ? i = It(
       this.originalData.classifications,
       t,
       this.currentClassificationRange.min,

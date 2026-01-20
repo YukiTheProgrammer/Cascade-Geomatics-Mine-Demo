@@ -44,8 +44,6 @@ export type ViewMode = (typeof ViewMode)[keyof typeof ViewMode];
  */
 export const ColorMode = {
   RGB: "RGB",
-  /** Neutral gray coloring (uniform) */
-  GRAY: "Gray",
   HEIGHT: "Height",
   INTENSITY: "Intensity",
   CLASSIFICATION: "Classification",
