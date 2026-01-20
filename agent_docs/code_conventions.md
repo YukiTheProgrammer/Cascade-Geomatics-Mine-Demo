@@ -1,0 +1,5 @@
+- Keep files small, no more than 500 lines per file.
+- Class and function names should be as descriptive as possible.
+- Follow test driven development principles.
+- Every file must have a header including: Description of purpose, Sample input, Expected output
+- Filenames should be descriptive.

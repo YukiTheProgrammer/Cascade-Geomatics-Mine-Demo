@@ -1,0 +1,39 @@
+# Root ignore file (repo-level)
+
+# Node / package managers
+**/node_modules/
+**/.pnpm-store/
+**/.yarn/
+**/.pnp.*
+
+# Build outputs
+**/dist/
+**/dist-ssr/
+
+# Logs
+**/logs/
+**/*.log
+
+# Local env / secrets
+**/*.local
+**/.env
+**/.env.*
+
+# OS / editor
+**/.DS_Store
+**/.idea/
+**/.vscode/
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+**/*.sw?
+
+# AI / IDE metadata
+.claude/
+.cursor/
+
+# Playwright artifacts / test outputs
+**/test-results/
+**/playwright-report/
+

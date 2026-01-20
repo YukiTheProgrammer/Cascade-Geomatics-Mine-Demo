@@ -1,0 +1,12 @@
+/**
+ * App.css
+ *
+ * Description: Global application styles for the Mine Demo Dashboard.
+ * Sample input: Imported in App.tsx
+ * Expected output: Base styling for root element
+ */
+
+#root {
+  width: 100%;
+  height: 100%;
+}
