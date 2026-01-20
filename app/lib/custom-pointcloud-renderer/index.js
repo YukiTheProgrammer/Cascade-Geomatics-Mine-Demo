@@ -1088,29 +1088,54 @@ function Tt(n, e) {
   }
   return o;
 }
+function __gray(e) {
+  const o = new Float32Array(e * 3), t = 0.45;
+  for (let i = 0; i < e; i++)
+    o[i * 3] = t, o[i * 3 + 1] = t, o[i * 3 + 2] = t;
+  return o;
+}
 function It(n, e, o, t) {
   const i = new Float32Array(e * 3), a = [0.3, 0.3, 0.3];
   for (let u = 0; u < e; u++) {
     const r = n[u];
     if (r >= o && r <= t) {
-      const c = ye[r] || [0.5, 0.5, 0.5];
+      const c = (o === 5 && t === 8 ? __microMovementsPalette[r] : o === 9 && t === 12 ? __riskPalette[r] : ye[r]) || [0.5, 0.5, 0.5];
       i[u * 3] = c[0], i[u * 3 + 1] = c[1], i[u * 3 + 2] = c[2];
     } else
       i[u * 3] = a[0], i[u * 3 + 1] = a[1], i[u * 3 + 2] = a[2];
   }
   return i;
 }
+const __microMovementsPalette = {
+  5: [0, 1, 0],
+  // Micro movements 1 - Green
+  6: [1, 1, 0],
+  // Micro movements 2 - Yellow
+  7: [1, 0.65, 0],
+  // Micro movements 3 - Orange
+  8: [1, 0, 0]
+  // Micro movements 4 - Red
+}, __riskPalette = {
+  9: [0, 1, 0],
+  // Risk 1 - Green
+  10: [1, 1, 0],
+  // Risk 2 - Yellow
+  11: [1, 0.65, 0],
+  // Risk 3 - Orange
+  12: [1, 0, 0]
+  // Risk 4 - Red
+};
 const sn = {
-  0: [0.2, 0.4, 0.8],
-  // Never classified - Blue (unanalyzed)
-  1: [0.3, 0.7, 0.9],
-  // Unclassified - Cyan (assessed, no category)
-  2: [0.2, 0.7, 0.3],
-  // Ground/Stable - Green (stable)
-  3: [0.9, 0.8, 0.2],
-  // Low concern - Yellow (minor concern)
-  4: [0.9, 0.4, 0.2]
-  // Medium concern - Orange-Red (elevated risk)
+  0: [0, 0.8, 1],
+  // Cracking 0 - Cyan/Blue
+  1: [0, 1, 0],
+  // Cracking 1 - Green
+  2: [1, 1, 0],
+  // Cracking 2 - Yellow
+  3: [1, 0.65, 0],
+  // Cracking 3 - Orange
+  4: [1, 0, 0]
+  // Cracking 4 - Red
 };
 function ft(n, e, o, t) {
   const i = new Float32Array(e * 3), a = [0.25, 0.25, 0.25];
@@ -1201,6 +1226,8 @@ function $t(n, e, o = null) {
   switch (n) {
     case "rgb":
       return e.colors && e.hasColor ? e.colors : X(e.positions, e.pointCount, e.bounds);
+    case "gray":
+      return __gray(e.pointCount);
     case "height":
       return X(e.positions, e.pointCount, e.bounds);
     case "intensity":
@@ -2409,7 +2436,7 @@ class Pn {
     const o = e.count, t = e.array;
     this.currentColorMode = bt();
     let i;
-    this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = X(t, o, this.originalData.bounds) : this.currentColorMode === "height" ? i = X(t, o, this.originalData.bounds) : i = X(t, o, this.originalData.bounds), this.geometry.setAttribute("color", new S.BufferAttribute(i, 3));
+    this.currentColorMode === "gray" ? i = __gray(o) : this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = X(t, o, this.originalData.bounds) : this.currentColorMode === "height" ? i = X(t, o, this.originalData.bounds) : i = X(t, o, this.originalData.bounds), this.geometry.setAttribute("color", new S.BufferAttribute(i, 3));
   }
   /**
    * Update geometry with new downsampling based on zoom level
@@ -2440,7 +2467,9 @@ class Pn {
         const A = P * 3;
         x[v * 3] = this.originalData.colors[A], x[v * 3 + 1] = this.originalData.colors[A + 1], x[v * 3 + 2] = this.originalData.colors[A + 2], v++;
       }
-    } else if (this.currentColorMode === "height")
+    } else if (this.currentColorMode === "gray")
+      x = __gray(d);
+    else if (this.currentColorMode === "height")
       x = X(p, d, this.originalData.bounds);
     else if (this.currentColorMode === "intensity" && this.originalData.intensities) {
       const v = new Float32Array(d);
@@ -2487,7 +2516,7 @@ class Pn {
     const e = performance.now(), { positions: o, pointCount: t } = this.originalData;
     this.currentColorMode = bt(), this.currentClassificationRange = ce();
     let i;
-    this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = this.originalData.colors : this.currentColorMode === "height" ? i = X(o, t, this.originalData.bounds) : this.currentColorMode === "intensity" && this.originalData.intensities ? i = Ot(this.originalData.intensities, t) : this.currentColorMode === "classification" && this.originalData.classifications ? this.currentClassificationRange && this.currentClassificationRange.min !== void 0 && this.currentClassificationRange.max !== void 0 ? i = It(
+    this.currentColorMode === "gray" ? i = __gray(t) : this.currentColorMode === "rgb" && this.originalData.colors && this.originalData.hasColor ? i = this.originalData.colors : this.currentColorMode === "height" ? i = X(o, t, this.originalData.bounds) : this.currentColorMode === "intensity" && this.originalData.intensities ? i = Ot(this.originalData.intensities, t) : this.currentColorMode === "classification" && this.originalData.classifications ? this.currentClassificationRange && this.currentClassificationRange.min !== void 0 && this.currentClassificationRange.max !== void 0 ? i = It(
       this.originalData.classifications,
       t,
       this.currentClassificationRange.min,

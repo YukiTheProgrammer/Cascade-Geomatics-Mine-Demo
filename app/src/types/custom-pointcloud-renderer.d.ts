@@ -119,7 +119,7 @@ declare module 'custom-pointcloud-renderer' {
    * @param classificationRange - Optional classification range for filtered coloring
    */
   export function updateColors(
-    mode: 'rgb' | 'height' | 'intensity' | 'classification',
+    mode: 'rgb' | 'gray' | 'height' | 'intensity' | 'classification' | 'cracking',
     classificationRange?: { min: number; max: number } | null
   ): void;
 

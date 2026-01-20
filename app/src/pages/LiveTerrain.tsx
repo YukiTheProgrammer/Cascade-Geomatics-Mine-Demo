@@ -60,12 +60,16 @@ function LiveTerrain(): JSX.Element {
   // Derive classification filter from view mode
   // 'cracking' mode shows only classification values 0-4
   // 'micro_movements' mode shows only classification values 5-8
+  // 'risk' mode shows only classification values 9-12
   const classificationFilter = useMemo(() => {
     if (viewMode === 'cracking') {
       return [0, 1, 2, 3, 4];
     }
     if (viewMode === 'micro_movements') {
       return [5, 6, 7, 8];
+    }
+    if (viewMode === 'risk') {
+      return [9, 10, 11, 12];
     }
     return null; // Show all points for other modes
   }, [viewMode]);
@@ -78,6 +82,9 @@ function LiveTerrain(): JSX.Element {
     }
     if (viewMode === 'micro_movements') {
       return { min: 5, max: 8 };
+    }
+    if (viewMode === 'risk') {
+      return { min: 9, max: 12 };
     }
     return null; // Color all classifications for other modes
   }, [viewMode]);
@@ -154,7 +161,7 @@ function LiveTerrain(): JSX.Element {
       <div ref={containerRef} className="relative flex-1 h-full">
         <PointCloudViewer
           ref={viewerRef}
-          lasFilePath="https://sxndev9uz5bibyk3.public.blob.vercel-storage.com/crxmine_combined_classifications.las"
+          lasFilePath="/data/crxmine_combined_classifications.las"
           colorMode={colorMode}
           className="h-full w-full"
           enableOptimizer={optimizerEnabled}
