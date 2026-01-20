@@ -1093,24 +1093,43 @@ function It(n, e, o, t) {
   for (let u = 0; u < e; u++) {
     const r = n[u];
     if (r >= o && r <= t) {
-      const c = ye[r] || [0.5, 0.5, 0.5];
+      const c = (o === 5 && t === 8 ? __microMovementsPalette[r] : o === 9 && t === 12 ? __riskPalette[r] : ye[r]) || [0.5, 0.5, 0.5];
       i[u * 3] = c[0], i[u * 3 + 1] = c[1], i[u * 3 + 2] = c[2];
     } else
       i[u * 3] = a[0], i[u * 3 + 1] = a[1], i[u * 3 + 2] = a[2];
   }
   return i;
 }
+const __microMovementsPalette = {
+  5: [0, 1, 0],
+  // Micro movements 1 - Green
+  6: [1, 1, 0],
+  // Micro movements 2 - Yellow
+  7: [1, 0.65, 0],
+  // Micro movements 3 - Orange
+  8: [1, 0, 0]
+  // Micro movements 4 - Red
+}, __riskPalette = {
+  9: [0, 1, 0],
+  // Risk 1 - Green
+  10: [1, 1, 0],
+  // Risk 2 - Yellow
+  11: [1, 0.65, 0],
+  // Risk 3 - Orange
+  12: [1, 0, 0]
+  // Risk 4 - Red
+};
 const sn = {
-  0: [0.2, 0.4, 0.8],
-  // Never classified - Blue (unanalyzed)
-  1: [0.3, 0.7, 0.9],
-  // Unclassified - Cyan (assessed, no category)
-  2: [0.2, 0.7, 0.3],
-  // Ground/Stable - Green (stable)
-  3: [0.9, 0.8, 0.2],
-  // Low concern - Yellow (minor concern)
-  4: [0.9, 0.4, 0.2]
-  // Medium concern - Orange-Red (elevated risk)
+  0: [0, 0.8, 1],
+  // Cracking 0 - Cyan/Blue
+  1: [0, 1, 0],
+  // Cracking 1 - Green
+  2: [1, 1, 0],
+  // Cracking 2 - Yellow
+  3: [1, 0.65, 0],
+  // Cracking 3 - Orange
+  4: [1, 0, 0]
+  // Cracking 4 - Red
 };
 function ft(n, e, o, t) {
   const i = new Float32Array(e * 3), a = [0.25, 0.25, 0.25];
