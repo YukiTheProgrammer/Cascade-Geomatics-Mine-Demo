@@ -43,11 +43,15 @@ function LiveTerrain(): JSX.Element {
   const viewerRef = useRef<PointCloudViewerRef>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // NOTE: Deployed builds must load the LAS from Blob Storage (GitHub can't host large LAS files).
-  // Local dev can still use /public/data via Vite if you have the file locally.
+  // LAS path:
+  // - Dev defaults to local `/public/data` if present
+  // - Prod defaults to hosted blob storage (GitHub can't host large LAS files)
+  // - Can be overridden in any env via `VITE_LAS_FILE_URL`
   const lasFilePath =
     import.meta.env.VITE_LAS_FILE_URL ||
-    'https://sxndev9uz5bibyk3.public.blob.vercel-storage.com/crxmine_combined_classifications.las';
+    (import.meta.env.PROD
+      ? 'https://sxndev9uz5bibyk3.public.blob.vercel-storage.com/crxmine_combined_classifications.las'
+      : '/data/crxmine_combined_classifications.las');
 
   // View and optimizer state
   const [viewMode, setViewMode] = useState<ViewMode>('default');
@@ -83,6 +87,12 @@ function LiveTerrain(): JSX.Element {
   // Derive classification color range from view mode
   // This ensures coloring is consistent with the filter - only relevant classifications get colored
   const classificationColorRange = useMemo(() => {
+    // Default view: force neutral-gray for all points.
+    // The renderer colors points *outside* the range as gray, so we pick a range that matches
+    // no expected classification values (Uint8 255 is typically unused).
+    if (viewMode === 'default') {
+      return { min: 255, max: 255 };
+    }
     if (viewMode === 'cracking') {
       return { min: 0, max: 4 };
     }
