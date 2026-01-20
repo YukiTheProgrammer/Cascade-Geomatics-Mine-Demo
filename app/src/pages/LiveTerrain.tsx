@@ -43,6 +43,12 @@ function LiveTerrain(): JSX.Element {
   const viewerRef = useRef<PointCloudViewerRef>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // NOTE: Deployed builds must load the LAS from Blob Storage (GitHub can't host large LAS files).
+  // Local dev can still use /public/data via Vite if you have the file locally.
+  const lasFilePath =
+    import.meta.env.VITE_LAS_FILE_URL ||
+    'https://sxndev9uz5bibyk3.public.blob.vercel-storage.com/crxmine_combined_classifications.las';
+
   // View and optimizer state
   const [viewMode, setViewMode] = useState<ViewMode>('default');
   const [optimizerEnabled, setOptimizerEnabled] = useState(true);
@@ -161,7 +167,7 @@ function LiveTerrain(): JSX.Element {
       <div ref={containerRef} className="relative flex-1 h-full">
         <PointCloudViewer
           ref={viewerRef}
-          lasFilePath="https://sxndev9uz5bibyk3.public.blob.vercel-storage.com/crxmine_combined_classifications.las"
+          lasFilePath={lasFilePath}
           colorMode={colorMode}
           className="h-full w-full"
           enableOptimizer={optimizerEnabled}
