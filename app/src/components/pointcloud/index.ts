@@ -10,8 +10,6 @@ export type { PointCloudViewerProps, PointCloudViewerRef } from './PointCloudVie
 export { ViewModeMenu, viewModeToColorMode } from './ViewModeMenu';
 export type { ViewModeMenuProps } from './ViewModeMenu';
 
-export { ViewModeLegend } from './ViewModeLegend';
-
 export { OnClickDataPanel } from './OnClickDataPanel';
 export type { OnClickDataPanelProps, AnnotationInput } from './OnClickDataPanel';
 

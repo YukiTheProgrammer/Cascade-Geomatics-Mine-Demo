@@ -26,7 +26,6 @@ import {
 } from 'lucide-react';
 
 import type { ColorMode, OptimizerMode, ViewMode } from '@/types/pointcloud';
-import { ViewModeLegend } from './ViewModeLegend';
 
 type IconComponent = React.ComponentType<{ className?: string; strokeWidth?: number }>;
 
@@ -48,7 +47,7 @@ interface ModeConfig<T extends string> {
 }
 
 const VIEW_MODE_CONFIGS: ModeConfig<ViewMode>[] = [
-  { mode: 'default', label: 'Default', description: 'Neutral gray base', icon: Eye },
+  { mode: 'default', label: 'Default', description: 'Original RGB colors', icon: Eye },
   { mode: 'height', label: 'Height', description: 'Elevation gradient', icon: TrendingUp },
   { mode: 'cracking', label: 'Cracking', description: 'Crack detection analysis', icon: Scan },
   { mode: 'micro_movements', label: 'Micro Movements', description: 'Movement detection', icon: Activity },
@@ -61,7 +60,7 @@ const OPTIMIZER_MODE_CONFIGS: ModeConfig<OptimizerMode>[] = [
 ];
 
 const VIEW_MODE_TO_COLOR_MODE: Record<ViewMode, ColorMode> = {
-  default: 'Classification',
+  default: 'RGB',
   height: 'Height',
   cracking: 'Cracking',
   micro_movements: 'Classification',
@@ -119,8 +118,6 @@ function ViewModeMenu({
           </button>
         );
       })}
-
-      <ViewModeLegend viewMode={currentMode} />
 
       {showOptimizer && (
         <>

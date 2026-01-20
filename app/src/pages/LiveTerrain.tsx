@@ -60,7 +60,6 @@ function LiveTerrain(): JSX.Element {
   // Derive classification filter from view mode
   // 'cracking' mode shows only classification values 0-4
   // 'micro_movements' mode shows only classification values 5-8
-  // 'risk' mode shows only classification values 9-12
   const classificationFilter = useMemo(() => {
     if (viewMode === 'cracking') {
       return [0, 1, 2, 3, 4];
@@ -68,28 +67,17 @@ function LiveTerrain(): JSX.Element {
     if (viewMode === 'micro_movements') {
       return [5, 6, 7, 8];
     }
-    if (viewMode === 'risk') {
-      return [9, 10, 11, 12];
-    }
     return null; // Show all points for other modes
   }, [viewMode]);
 
   // Derive classification color range from view mode
   // This ensures coloring is consistent with the filter - only relevant classifications get colored
   const classificationColorRange = useMemo(() => {
-    // Default mode: force a neutral gray render by using an "empty" range.
-    // Nothing matches (min > max), so all points fall back to the renderer's neutral gray.
-    if (viewMode === 'default') {
-      return { min: 1, max: 0 };
-    }
     if (viewMode === 'cracking') {
       return { min: 0, max: 4 };
     }
     if (viewMode === 'micro_movements') {
       return { min: 5, max: 8 };
-    }
-    if (viewMode === 'risk') {
-      return { min: 9, max: 12 };
     }
     return null; // Color all classifications for other modes
   }, [viewMode]);
